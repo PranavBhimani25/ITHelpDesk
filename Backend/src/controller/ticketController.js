@@ -179,7 +179,7 @@ try {
     if (!agent || agent.role !== 'Agent') {
       return res.status(400).json({ message: 'Invalid agent user' });
     }
-
+ 
     ticket.assignedTo = assignedTo;
     await ticket.save();
     res.json(ticket);
