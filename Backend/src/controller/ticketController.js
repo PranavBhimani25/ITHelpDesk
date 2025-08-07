@@ -139,6 +139,22 @@ export const updateTicketStatus = async (req, res) => {
   }
 };
 export const assignTicket = async (req, res) => {
+  try {
+      const { assignedTo } = req.body;
+      const ticket = await Ticket.findById(req.params.id);
+      if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+  
+      const agent = await User.findById(assignedTo);
+      if (!agent || agent.role !== 'Agent') {
+        return res.status(400).json({ message: 'Invalid agent user' });
+      }
+   
+      ticket.assignedTo = assignedTo;
+      await ticket.save();
+      res.json(ticket);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
 //   const { userId } = req.body;
 
 //   try {
@@ -170,20 +186,4 @@ export const assignTicket = async (req, res) => {
 //   }
 
 
-try {
-    const { assignedTo } = req.body;
-    const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
-
-    const agent = await User.findById(assignedTo);
-    if (!agent || agent.role !== 'Agent') {
-      return res.status(400).json({ message: 'Invalid agent user' });
-    }
- 
-    ticket.assignedTo = assignedTo;
-    await ticket.save();
-    res.json(ticket);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 };
