@@ -1,0 +1,19 @@
+# Ignore build artifacts
+/build/
+*.class
+*.jar
+*.war
+
+# Ignore IDE files
+.idea/
+.vscode/
+
+# Ignore temporary files
+*.tmp
+temp/
+
+# Ignore log files
+*.log
+
+# Ignore sensitive files (e.g., environment variables)
+.env
