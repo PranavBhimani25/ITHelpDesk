@@ -35,6 +35,7 @@ export const loginUser = async (req, res) => {
     if (user && user.passwordHash === passwordHash) {
       res.json({
         message: "Login successful",
+        role: user.role,
         token: generateToken(user._id),
       });
     } else {

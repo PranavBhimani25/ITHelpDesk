@@ -187,3 +187,23 @@ export const assignTicket = async (req, res) => {
 
 
 };
+
+export const countTickets = async (req, res) => {
+  try {
+    console.log("Counting tickets..."); // Debug step
+
+    const totalTickets = await Ticket.countDocuments();
+
+    console.log(`Found ${totalTickets} tickets`); // Debug step
+
+    res.status(200).json({ total: totalTickets });
+  } catch (error) {
+    console.error("Error counting tickets:", error); // This will show the real cause
+    res.status(500).json({
+      message: "Error fetching ticket",
+      error: error.message
+    });
+  }
+};
+
+

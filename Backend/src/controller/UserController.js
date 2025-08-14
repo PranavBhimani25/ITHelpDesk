@@ -24,14 +24,20 @@ export const createUser = async (req, res) => {
 export const getUserById = async (req, res) => {
     try{
         const { id } = req.params;
-        const user = await User.findById(id ,{ isActive: true });
+        const user = await User.findById(id);
         if (!user.isActive) {
             return res.status(400).json({ message: "User is Disable" });
         }
         if(!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        res.status(200).json(user);
+        res.status(200).json({ 
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            department: user.department
+        });
     }
     catch (error) {
         res.status(500).json({ message: 'Error fetching user', error });
